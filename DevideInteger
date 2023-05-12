@@ -1,0 +1,29 @@
+class DevideInteger {
+    public int divide(int dividend, int divisor) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+
+      if (divisor == 0) {
+            throw new IllegalArgumentException("Divisor cannot be 0");
+        }
+
+        int sign = 1;
+        if (dividend < 0) {
+            sign *= -1;
+            dividend *= -1;
+        }
+        if (divisor < 0) {
+            sign *= -1;
+            divisor *= -1;
+        }
+
+        int result = 0;
+        while (dividend >= divisor) {
+            dividend -= divisor;
+            result++;
+        }
+
+        return result * sign;  
+    }
+}
