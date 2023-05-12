@@ -1,0 +1,31 @@
+class CustomSortString {
+    public String customSortString(String order, String s) {
+         Map<Character, Integer> freqMap = new HashMap<>();
+    StringBuilder result = new StringBuilder();
+
+    // Store the frequency of each character in s
+    for (char c : s.toCharArray()) {
+        freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+    }
+
+    // Append the characters from s in the order specified by order
+    for (char c : order.toCharArray()) {
+        if (freqMap.containsKey(c)) {
+            int freq = freqMap.get(c);
+            for (int i = 0; i < freq; i++) {
+                result.append(c);
+            }
+            freqMap.remove(c);
+        }
+    }
+
+    // Append any remaining characters from s
+    for (char c : freqMap.keySet()) {
+        int freq = freqMap.get(c);
+        for (int i = 0; i < freq; i++) {
+            result.append(c);
+        }
+    }
+    return result.toString();    
+    }
+}
