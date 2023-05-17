@@ -1,0 +1,17 @@
+public class BinaryTreeDiameter {
+    private int diameter = 0;
+ 
+    public int diameter(TreeNode root){
+        getDepth(root);
+        return diameter;
+    }
+    private int getDepth(TreeNode node){
+        if (node == null){
+            return 0;
+        }
+        int leftDept = getDepth(node.left);
+        int rightDept = getDepth(node.right);
+        diameter = Math.max(diameter,leftDept + rightDept);
+        return Math.max(leftDept , rightDept) + 1;
+    }
+}
