@@ -1,0 +1,58 @@
+class ListTreeNode{
+    int val;
+    ListTreeNode left;
+    ListTreeNode right;
+    ListTreeNode next;
+ 
+    public ListTreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+        this.next = null;
+    }
+}
+ 
+public class PopulateLevelPointers {
+    public ListTreeNode connect (ListTreeNode root){
+        if ( root == null){
+            return  null;
+        }
+        ListTreeNode currentNode = root;// Start at the root node
+        while (currentNode.left != null){ // Traverse each level of the tree until there are no more levels
+            ListTreeNode level = currentNode;// Set the starting node of the level to the current node
+            while (level != null){ // Traverse each node of the level
+                level.left.next = level.right;// Connect the left child node to the right child node
+                if ( level.next != null){
+                    level.right.next = level.next.left; // Connect the right child node to the left child node of the next node on the same level
+                }
+                level = level.next;// Move to the next node on the same level
+            }
+            currentNode = currentNode.left;// Move to the next level of the tree
+        }
+        return root;// Return the modified tree
+    }
+ 
+    public static void main(String[] args) {
+        ListTreeNode root = new ListTreeNode(1);
+        root.left = new ListTreeNode(2);
+        root.right = new ListTreeNode(3);
+        root.left.left = new ListTreeNode(4);
+        root.left.right = new ListTreeNode(5);
+        root.right.left = new ListTreeNode(6);
+        root.right.right = new ListTreeNode(7);
+ 
+        PopulateLevelPointers plp = new PopulateLevelPointers();
+        ListTreeNode result = plp.connect(root);
+ 
+        ListTreeNode current = result;
+        while (current != null){
+            ListTreeNode level = current;
+            while (level != null){
+                System.out.print(level.val + " -> ");
+                level = level.next;
+            }
+            System.out.println("x");
+            current = current.left;
+        }
+    }
+}
