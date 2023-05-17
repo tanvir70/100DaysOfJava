@@ -1,0 +1,79 @@
+class TrieNode {
+    char character;
+    TrieNode[] alphabet;
+    boolean endsWord;
+ 
+    public TrieNode(char character) {
+        this.character = character;
+        alphabet = new TrieNode[26];
+        endsWord = false;
+    }
+}
+ 
+public class ImplementTrie {
+    TrieNode root = new TrieNode('#');
+ 
+    public void insert(String word) {
+        TrieNode currentNode = root;
+ 
+        for (int i = 0; i < word.length(); i++) {
+            char nextCharacter = word.charAt(i);
+            int index = nextCharacter - 'a';
+ 
+            if (currentNode.alphabet[index] == null) {
+                currentNode.alphabet[index] = new TrieNode(nextCharacter);
+            }
+            currentNode = currentNode.alphabet[index];
+        }
+        currentNode.endsWord = true;
+    }
+ 
+    public boolean search(String word) {
+        TrieNode currentNode = root;
+ 
+        for (int i = 0; i < word.length(); i++) {
+            char nextCharacter = word.charAt(i);
+            int index = nextCharacter - 'a';
+ 
+            if (currentNode.alphabet[index] == null) {
+                return false;
+            }
+            currentNode = currentNode.alphabet[index];
+        }
+        return currentNode.endsWord;
+    }
+ 
+    public boolean startsWith(String word) {
+ 
+        TrieNode currentNode = root;
+ 
+        for (int i = 0; i < word.length(); i++) {
+            char nextCharacter = word.charAt(i);
+            int index = nextCharacter - 'a';
+ 
+            if (currentNode.alphabet[index] == null) {
+                return false;
+            }
+            currentNode = currentNode.alphabet[index];
+        }
+        return true;
+    }
+ 
+    public static void main(String[] args) {
+        ImplementTrie trie = new ImplementTrie();
+ 
+        trie.insert("apple");
+        trie.insert("banana");
+        trie.insert("carrot");
+ 
+        System.out.println(trie.search("apple")); // true
+        System.out.println(trie.search("banana")); // true
+        System.out.println(trie.search("carrot")); // true
+        System.out.println(trie.search("orange")); // false
+ 
+        System.out.println(trie.startsWith("app")); // true
+        System.out.println(trie.startsWith("ban")); // true
+        System.out.println(trie.startsWith("car")); // true
+        System.out.println(trie.startsWith("ora")); // false
+    }
+}
