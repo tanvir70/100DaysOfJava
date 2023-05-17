@@ -1,0 +1,52 @@
+import java.util.Stack;
+ 
+public class InorderSuccessor {
+    public TreeNode inorderSuccessor(TreeNode root, int x) {
+        Stack<TreeNode> stack = new Stack<>();
+        boolean found = false;
+ 
+        // Traverse the tree using in-order traversal
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+ 
+            // If x is found, check for its inorder successor
+            if (found) {
+                return root;
+            }
+            if (root.val == x) {
+                found = true;
+                if (root.right != null) {
+                    // Case 1: Node has a right subtree
+                    root = root.right;
+                    while (root != null) {
+                        stack.push(root);
+                        root = root.left;
+                    }
+                }
+            }
+            root = root.right;
+        }
+        return null;
+ 
+    }
+ 
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(5);
+        root.left = new TreeNode(3);
+        root.left.left = new TreeNode(2);
+        root.left.right = new TreeNode(4);
+        root.left.left.left = new TreeNode(1);
+ 
+        root.right = new TreeNode(7);
+        root.right.right = new TreeNode(8);
+        root.right.right.left = new TreeNode(6);
+ 
+        InorderSuccessor is = new InorderSuccessor();
+        TreeNode successor = is.inorderSuccessor(root,6);
+        System.out.println(successor.val); // 8
+    }
+}
