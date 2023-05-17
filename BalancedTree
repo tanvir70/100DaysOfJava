@@ -1,0 +1,33 @@
+public class BalancedTree {
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        int leftHeight = getHeight(root.left);
+        int rightHeight = getHeight(root.right);
+ 
+        if (Math.abs(leftHeight - rightHeight) > 1) {
+            return false;
+        }
+        return isBalanced(root.left) && isBalanced(root.right);
+    }
+ 
+    private int getHeight(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return Math.max(getHeight(node.left), getHeight(node.right) + 1);
+    }
+ 
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+            root.left = new TreeNode(2);
+            root.right = new TreeNode(3);
+            root.right.left = new TreeNode(4);
+            root.right.right = new TreeNode(5);
+            root.right.right.right = new TreeNode(7);
+ 
+        BalancedTree bt = new BalancedTree();
+        System.out.println(bt.isBalanced(root)); // false
+    }
+}
