@@ -1,0 +1,45 @@
+import java.util.HashSet;
+import java.util.Set;
+ 
+public class IntersectionOfTwoArray {
+    public int[] intersection(int[] arrayOne, int[] arrayTwo) {
+        Set<Integer> set = new HashSet<>();
+        int pointerOne = 0;
+        int pointerTwo = 0;
+ 
+        while (pointerOne < arrayOne.length && pointerTwo < arrayTwo.length) {
+            if (arrayOne[pointerOne] == arrayTwo[pointerTwo]) {
+                set.add(arrayOne[pointerOne]);
+                pointerOne++;
+                pointerTwo++;
+            } else if (arrayOne[pointerOne] < arrayTwo[pointerTwo]) {
+                pointerOne++;
+            } else {
+                pointerTwo++;
+            }
+        }
+        return setToArray(set);
+    }
+ 
+    public int[] setToArray(Set<Integer> set) {
+        int[] array = new int[set.size()];
+ 
+        int i = 0;
+        for (int iteam : set) {
+            array[i] = iteam;
+            i++;
+        }
+        return array;
+    }
+ 
+    public static void main(String[] args) {
+        IntersectionOfTwoArray intersectionFinder = new IntersectionOfTwoArray();
+        int[] arrayOne = {1, 2, 3, 4, 5};
+        int[] arrayTwo = {1, 2};
+        int[] intersection = intersectionFinder.intersection(arrayOne, arrayTwo);
+        System.out.print("Intersection of arrays: ");
+        for (int i = 0; i < intersection.length; i++) {
+            System.out.print(intersection[i] + " "); // 4 5
+        }
+    }
+}
